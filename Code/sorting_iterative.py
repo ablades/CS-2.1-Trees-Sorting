@@ -10,21 +10,22 @@ def is_sorted(items):
             return False
     return True
         
-
+def swap(items, i, j):
+    tmp = items[i]
+    items[i] = items[j]
+    items[j] = tmp
 
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
+    TODO: Worst Case O(N^2) - reverse order Best Case O(N) - sorted array
     TODO: Memory usage: ??? Why and under what conditions?"""
     for i in range(len(items)):
         swapped = False
         for j in range(len(items) - i - 1):
             #compare and swap
             if items[j] > items[j + 1]:
-                tmp = items[j]
-                items[j] = items[j + 1]
-                items[j + 1] = tmp
+                swap(items, j, j+1)
                 swapped = True
         #No elements swapped - already sorted
         if swapped == False:
@@ -36,6 +37,17 @@ def selection_sort(items):
     unsorted item, and repeating until all items are in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
+    for i in range(len(items)):
+        min_index = i
+        for j in range(i, len(items)):
+            if items[j] < items[min_index]:
+                min_index = j
+
+        items[i]
+
+
+
+
     # TODO: Repeat until all items are in sorted order
     # TODO: Find minimum item in unsorted items
     # TODO: Swap it with first unsorted item
