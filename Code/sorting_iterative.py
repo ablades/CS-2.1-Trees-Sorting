@@ -3,9 +3,13 @@
 
 def is_sorted(items):
     """Return a boolean indicating whether given items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check that all adjacent items are in order, return early if so
+    Running time: O(N) - Iterates over the entire array - 1
+    Memory usage: O(N) - No extra space allocated."""
+    for i in range(len(items) - 1):
+        if items[i] > items[i + 1]:
+            return False
+    return True
+        
 
 
 def bubble_sort(items):
