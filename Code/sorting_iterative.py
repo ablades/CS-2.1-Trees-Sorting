@@ -18,11 +18,17 @@ def bubble_sort(items):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     for i in range(len(items)):
+        swapped = False
         for j in range(len(items) - i - 1):
+            #compare and swap
             if items[j] > items[j + 1]:
                 tmp = items[j]
-                items[j] = items[j+1]
-                items[j+1] = tmp
+                items[j] = items[j + 1]
+                items[j + 1] = tmp
+                swapped = True
+        #No elements swapped - already sorted
+        if swapped == False:
+            return
 
 
 def selection_sort(items):
