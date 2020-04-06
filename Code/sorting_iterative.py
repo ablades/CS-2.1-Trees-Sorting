@@ -49,8 +49,26 @@ def selection_sort(items):
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    TODO: Running time: ??? Why and under what conditions?
+    TODO: Running time: Best Case O(N) - compares all elements
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Take first unsorted item
-    # TODO: Insert it in sorted order in front of items
+
+    # [3,1,2,9]
+    # [3,3,2,9]
+    for i in range(1, len(items)):
+        unsorted_item = items[i]
+        
+        j = i
+        while j > 0:
+            #item is less than current comp
+            if unsorted_item < items[j-1]:
+                #push back the element
+                items[j] = items[j-1]
+                items[j-1] = unsorted_item
+            #unsorted item is greater or equal to current comp
+            else:
+                items[j] = unsorted_item
+                break
+            j -= 1
+    # look at first unsorted item
+    #push back values until a spot is found.
+    #repeat
