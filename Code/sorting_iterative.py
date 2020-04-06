@@ -19,7 +19,7 @@ def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
     Worst Case O(N^2) - reverse order Best Case O(N) - sorted array
-    Memory usage: ??? Why and under what conditions?"""
+    Memory Usage: O(1) All operations outside of variable swapping is done in place"""
     for i in range(len(items)):
         swapped = False
         for j in range(len(items) - i - 1):
@@ -36,7 +36,7 @@ def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
     Running time: Worst Case O(N^2) - reverse order Best Case O(N^2) - sorted algorithm still does N^2 passes
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Memory Usage: O(1) All operations outside of variable swapping is done in place"""
     for i in range(len(items)):
         min_index = i
         for j in range(i, len(items)):
@@ -49,8 +49,8 @@ def selection_sort(items):
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    TODO: Running time: Best Case O(N) - compares all elements
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: Best Case O(N) - compares all elements Worst Case O(N^2) - elements are in reverse order
+    Memory Usage: O(1) All operations outside of variable swapping is done in place"""
 
     # [3,1,2,9]
     # [3,3,2,9]
@@ -69,6 +69,3 @@ def insertion_sort(items):
                 items[j] = unsorted_item
                 break
             j -= 1
-    # look at first unsorted item
-    #push back values until a spot is found.
-    #repeat
