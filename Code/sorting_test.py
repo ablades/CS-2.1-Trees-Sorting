@@ -218,8 +218,8 @@ def get_sort_function():
 #sort = bubble_sort
 #sort = selection_sort
 #sort = insertion_sort
-sort = split_sort_merge
-#sort = merge_sort
+#sort = split_sort_merge
+sort = merge_sort
 
 
 if __name__ == '__main__':
