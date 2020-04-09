@@ -5,8 +5,8 @@ from sorting_iterative import insertion_sort
 def merge(items1, items2):
     """Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n + m) where n and m are passed in arrays
+    Memory usage: O(n + m) where n and m are the number of elements in each array"""
     sorted_items = []
 
     i = 0
@@ -21,14 +21,15 @@ def merge(items1, items2):
             else:
                 sorted_items.append(items2[j])
                 j += 1
-        #i is only one with elements remaining
-        elif i < len(items1):
-            sorted_items.append(items1[i])
-            i += 1
-        #j is ony one with elements remaining
-        elif j < len(items2):
-            sorted_items.append(items2[j])
-            j += 1
+        else:
+            #i is only one with elements remaining
+            if i < len(items1):
+                sorted_items.extend(items1[i:])
+            #j is ony one with elements remaining
+            else:
+                sorted_items.extend(items2[j:])
+                
+            break
 
     return sorted_items
 
@@ -41,14 +42,12 @@ def split_sort_merge(items):
     TODO: Memory usage: ??? Why and under what conditions?"""
     mid = len(items) // 2
 
-    items1 = items[0:mid]
-    items2 = items[mid:]
 
-    insertion_sort(items1)
-    insertion_sort(items2)
+    insertion_sort(items[0:mid])
+    insertion_sort(items[mid:])
 
-    return merge(items1, items2)
-
+    #insertion_sort(items)
+    return merge(items[0:mid], items[mid:])
 
 
 def merge_sort(items):
@@ -56,6 +55,20 @@ def merge_sort(items):
     sorting each recursively, and merging results into a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
+
+    #base case
+    if len(items) == 1:
+        return items
+
+    else:
+        mid = len(items) // 2
+
+        left = merge_sort(items[0:mid])
+        right = merge_sort(items[mid:])
+
+        merge(left, right)
+    
+
     # TODO: Check if list is so small it's already sorted (base case)
     # TODO: Split items list into approximately equal halves
     # TODO: Sort each half by recursively calling merge sort
