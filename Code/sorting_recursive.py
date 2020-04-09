@@ -1,5 +1,5 @@
 #!python
-from sorting_iterative import insertion_sort
+from sorting_iterative import insertion_sort, bubble_sort
 
 
 def merge(items1, items2):
@@ -28,7 +28,7 @@ def merge(items1, items2):
             #j is ony one with elements remaining
             else:
                 sorted_items.extend(items2[j:])
-                
+
             break
 
     return sorted_items
@@ -42,12 +42,13 @@ def split_sort_merge(items):
     TODO: Memory usage: ??? Why and under what conditions?"""
     mid = len(items) // 2
 
+    items1 = items[:mid]
+    items2 = items[mid:]
 
-    insertion_sort(items[0:mid])
-    insertion_sort(items[mid:])
+    bubble_sort(items1)
+    bubble_sort(items2)
 
-    #insertion_sort(items)
-    return merge(items[0:mid], items[mid:])
+    items[:] = merge(items1, items2)
 
 
 def merge_sort(items):
