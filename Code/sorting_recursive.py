@@ -1,5 +1,5 @@
 #!python
-from sorting_iterative import insertion_sort, bubble_sort
+from sorting_iterative import insertion_sort, bubble_sort, swap
 
 
 def merge(items1, items2):
@@ -75,13 +75,27 @@ def merge_sort(items):
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
-    `[low...high]` by choosing a pivot (TODO: document your method here) from
+    `[low...high]` by choosing a pivot with median of 3 function from
     that range, moving pivot into index `p`, items less than pivot into range
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Choose a pivot any way and document your method in docstring above
-    # TODO: Loop through all items in range [low...high]
+    mid = (low + high) // 2
+    pivot = mid
+
+    #choose pivot
+    if items[mid] < items[high] and items[mid] > items[low]:
+        pivot = mid
+    elif items[low] < items[mid] and items[low] > items[high]:
+        pivot = low
+        swap(items, items[low], items[mid])
+    elif items[mid] < items[high]:
+        pivot = high
+        swap(items, items[high], items[mid])
+        
+    for index, value in enu
+    for item in items[low:high]:
+
     # TODO: Move items less than pivot into front of range [low...p-1]
     # TODO: Move items greater than pivot into back of range [p+1...high]
     # TODO: Move pivot item into final position [p] and return index p
