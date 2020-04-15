@@ -99,7 +99,7 @@ def partition(items, low, high):
     #choose piviot
     #left reference to lowest
     #right reference to highest
-    while True:
+    while left < right:
         #find item greater than pivot
         while items[left] < items[pivot]:
             left += 1
@@ -111,6 +111,8 @@ def partition(items, low, high):
         #swap items
         if items[left] > items[pivot] and items[right] < items[pivot]:
             swap(items, left, right)
+            left += 1
+            right -= 1
 
         #Move pivot to final position
         if left >= right:
@@ -123,10 +125,26 @@ def quick_sort(items, low=None, high=None):
     TODO: Best case running time: ??? Why and under what conditions?
     TODO: Worst case running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
+
+    #start quicksort
+    if low == None and high == None:
+        quick_sort(items, low = 0, high = len(items) - 1)
+
+
+    #Base case input is too small
+    if len(items) == 1 or high - low <= 1:
+        return
+
+    #partition items
+    pivot = partition(items, low, high)
+
+    #sort left sublist
+    if low < pivot:
+        quick_sort(items, low, pivot)
+    
+    #sort right sublist
+    if right > pivot:
+        quick_sort(items, pivot, right)
 
 if __name__ == "__main__":
     items1 = [1, 3, 5, 7, 10]
