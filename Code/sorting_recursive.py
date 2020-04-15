@@ -93,13 +93,29 @@ def partition(items, low, high):
         pivot = high
         swap(items, items[high], items[mid])
         
-    for index, value in enu
-    for item in items[low:high]:
+    left = low
+    right = high
 
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
+    #choose piviot
+    #left reference to lowest
+    #right reference to highest
+    while True:
+        #find item greater than pivot
+        while items[left] < items[pivot]:
+            left += 1
 
+        #find item less than pivot
+        while items[right] > items[pivot]:
+            right -= 1
+
+        #swap items
+        if items[left] > items[pivot] and items[right] < items[pivot]:
+            swap(items, left, right)
+
+        #Move pivot to final position
+        if left >= right:
+            swap(items, left, pivot)
+            return pivot
 
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
