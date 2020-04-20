@@ -7,17 +7,19 @@ def counting_sort(numbers):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Find range of given numbers (minimum and maximum integer values)
-    histogram = [0] * max(numbers)
+    histogram = [0] * (max(numbers) + 1)
 
     #build histogram of counts
-    for item in numbers:
-        histogram[item] += 1
+    for _, value in enumerate(numbers):
+        histogram[value] += 1
 
     # Create output list
-    output = list()
-    for val, count in enumerate(histogram):
-            output.extend([val for i in range(count)])
-    # FIXME: Improve this to mutate input instead of creating new output list
+    index = 0
+    for value, count in enumerate(histogram):
+        while count > 0:
+            numbers[index] = value
+            index += 1
+            count -= 1
 
 
 def bucket_sort(numbers, num_buckets=10):
