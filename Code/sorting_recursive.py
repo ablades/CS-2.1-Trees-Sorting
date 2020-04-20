@@ -1,6 +1,6 @@
 #!python
 from sorting_iterative import insertion_sort, bubble_sort, swap
-
+from random import randint
 
 def merge(items1, items2):
     """Merge given lists of items, each assumed to already be in sorted order,
@@ -80,41 +80,31 @@ def partition(items, low, high):
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    mid = (low + high) // 2
-    pivot = mid
+    swap(items, low, randint(low, high))
+    pivot = low
+    
+    low += 1
 
-    #choose pivot
-    if items[mid] < items[high] and items[mid] > items[low]:
-        pivot = mid
-    elif items[low] < items[mid] and items[low] > items[high]:
-        pivot = low
-        swap(items, items[low], items[mid])
-    elif items[mid] < items[high]:
-        pivot = high
-        swap(items, items[high], items[mid])
-        
-    left = low
-    right = high
 
-    while left < right:
+    while True:
         #find item greater than pivot
-        while items[left] < items[pivot] and left < len(items):
-            left += 1
+        while low <= high and items[low] <= items[pivot]:
+            low += 1
 
         #find item less than pivot
-        while items[right] > items[pivot] and right > 0:
-            right -= 1
+        while low <= high and items[low] <= items[pivot]:
+            high -= 1
 
-        #swap items
-        if items[left] > items[pivot] and items[right] < items[pivot]:
-            swap(items, left, right)
-            left += 1
-            right -= 1
+        #still in bounds, swap items 
+        if low <= high:
+            swap(items, low, high)
+        #out of bounds
+        else:
+            break
 
-        #Move pivot to final position
-        if left >= right:
-            swap(items, left, pivot)
-            return pivot
+    #Move pivot to final position
+    swap(items, high, pivot)
+    return high
 
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
@@ -125,28 +115,25 @@ def quick_sort(items, low=None, high=None):
 
     #start quicksort
     if low == None and high == None:
-        quick_sort(items, low = 0, high = len(items) - 1)
-
+        low = 0
+        high = len(items) - 1
 
     #Base case input is too small
-    if len(items) <= 1 or high - low <= 1:
-        return
+    if low < high:
+        #partition items
+        pivot = partition(items, low, high)
 
-    #partition items
-    pivot = partition(items, low, high)
-
-    #sort left sublist
-    if low < pivot:
+        #sort left sublist
         quick_sort(items, low, pivot - 1)
     
-    #sort right sublist
-    if right > pivot:
-        quick_sort(items, pivot + 1, right)
+        #sort right sublist
+        quick_sort(items, pivot + 1, high)
 
 if __name__ == "__main__":
     items1 = [1, 3, 5, 7, 10]
     items2 = [2, 3, 9]
     items3 = [5, 1, 10, 6, 8, 2]
-    print(merge(items1, items2))
 
-    print(split_sort_merge(items3))
+    quick_sort(items3)
+
+    print(items3)
