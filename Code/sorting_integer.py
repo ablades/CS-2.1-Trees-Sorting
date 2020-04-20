@@ -39,11 +39,11 @@ def bucket_sort(numbers, num_buckets=10):
     for value in numbers:
         index = value * num_buckets // maximum
         buckets[index].append(value)
-        counting_sort(buckets[index])
 
     #Mutate numbers
     index = 0
     for bucket in buckets:
+        counting_sort(bucket)
         for item in bucket:
             numbers[index] = item
             index += 1
