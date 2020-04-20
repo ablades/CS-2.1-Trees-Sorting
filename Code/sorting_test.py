@@ -220,7 +220,9 @@ def get_sort_function():
 #sort = insertion_sort
 #sort = split_sort_merge
 #sort = merge_sort
-sort = quick_sort
+#sort = quick_sort
+sort = bucket_sort
+#sort = counting_sort
 
 if __name__ == '__main__':
     # Get sort function from command-line argument

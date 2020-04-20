@@ -7,7 +7,7 @@ def counting_sort(numbers):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # Find range of given numbers (minimum and maximum integer values)
-    histogram = [0] * (max(numbers) + 1)
+    histogram = [0] * (max(numbers, default=0) + 1)
 
     #build histogram of counts
     for _, value in enumerate(numbers):
@@ -28,7 +28,25 @@ def bucket_sort(numbers, num_buckets=10):
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Find range of given numbers (minimum and maximum values)
+    maximum = max(numbers, default=0) + 1
     # TODO: Create list of buckets to store numbers in subranges of input range
+    buckets = list()
+    for i in range(num_buckets):
+        buckets.append(list())
+
+    for value in numbers:
+        index = value * num_buckets // maximum
+        buckets[index].append(value)
+        counting_sort(buckets[index])
+
+    index = 0
+    for bucket in buckets:
+        for item in bucket:
+            numbers[index] = item
+            index += 1
+
+    
+
     # TODO: Loop over given numbers and place each item in appropriate bucket
     # TODO: Sort each bucket using any sorting algorithm (recursive or another)
     # TODO: Loop over buckets and append each bucket's numbers into output list
