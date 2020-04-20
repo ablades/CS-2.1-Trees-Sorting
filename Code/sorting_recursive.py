@@ -82,29 +82,29 @@ def partition(items, low, high):
     TODO: Memory usage: ??? Why and under what conditions?"""
     swap(items, low, randint(low, high))
     pivot = low
-    
-    low += 1
 
+    left = low + 1
+    right = high
 
     while True:
         #find item greater than pivot
-        while low <= high and items[low] <= items[pivot]:
-            low += 1
+        while left <= right and items[left] <= items[pivot]:
+            left += 1
 
         #find item less than pivot
-        while low <= high and items[low] >= items[pivot]:
-            high -= 1
+        while left <= right and items[right] >= items[pivot]:
+            right -= 1
 
         #still in bounds, swap items 
-        if low <= high:
-            swap(items, low, high)
+        if left <= right:
+            swap(items, left, right)
         #out of bounds
         else:
             break
 
     #Move pivot to final position
-    swap(items, high, pivot)
-    return high
+    swap(items, right, pivot)
+    return right
 
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
