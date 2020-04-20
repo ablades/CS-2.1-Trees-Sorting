@@ -92,7 +92,7 @@ def partition(items, low, high):
             low += 1
 
         #find item less than pivot
-        while low <= high and items[low] <= items[pivot]:
+        while low <= high and items[low] >= items[pivot]:
             high -= 1
 
         #still in bounds, swap items 
