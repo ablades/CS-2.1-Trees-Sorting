@@ -6,10 +6,17 @@ def counting_sort(numbers):
     then looping over counts and copying that many numbers into output list.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Find range of given numbers (minimum and maximum integer values)
-    # TODO: Create list of counts with a slot for each number in input range
-    # TODO: Loop over given numbers and increment each number's count
-    # TODO: Loop over counts and append that many numbers into output list
+    # Find range of given numbers (minimum and maximum integer values)
+    histogram = [0] * max(numbers)
+
+    #build histogram of counts
+    for item in numbers:
+        histogram[item] += 1
+
+    # Create output list
+    output = list()
+    for val, count in enumerate(histogram):
+            output.extend([val for i in range(count)])
     # FIXME: Improve this to mutate input instead of creating new output list
 
 

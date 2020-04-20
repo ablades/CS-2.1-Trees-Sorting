@@ -127,13 +127,4 @@ def quick_sort(items, low=None, high=None):
         quick_sort(items, low, pivot - 1)
     
         #sort right sublist
-        quick_sort(items, pivot + 1, high)
-
-if __name__ == "__main__":
-    items1 = [1, 3, 5, 7, 10]
-    items2 = [2, 3, 9]
-    items3 = [5, 1, 10, 6, 8, 2]
-
-    quick_sort(items3)
-
-    print(items3)
+        quick_sort(items, pivot + 1, high)          
