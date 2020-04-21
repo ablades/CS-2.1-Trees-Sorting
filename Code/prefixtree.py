@@ -35,7 +35,7 @@ class PrefixTree:
 
     def is_empty(self):
         """Return True if this prefix tree is empty (contains no strings)."""
-        if size == 0:
+        if self.size == 0:
             return True
         
         return True
@@ -85,7 +85,18 @@ class PrefixTree:
             return self.root, 0
         # Start with the root node
         node = self.root
-        # TODO
+        depth = 0
+        
+        for character in string:
+            if node.has_child(character):
+                node = node.get_child(character)
+                depth += 1
+            else:
+                break
+
+        return node,depth
+
+
 
     def complete(self, prefix):
         """Return a list of all strings stored in this prefix tree that start
