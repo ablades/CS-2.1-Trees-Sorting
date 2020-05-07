@@ -1,5 +1,3 @@
-#!python3
-
 from prefixtreenode import PrefixTreeNode
 
 
@@ -40,33 +38,32 @@ class PrefixTree:
     def contains(self, string):
         """Return True if this prefix tree contains the given string."""
         node = self.root
-        #loop over all character
         for character in string:
-            #check if it is a child
+            # if the next node exists, traverse
             if node.has_child(character):
-                #advance node
-                node = node.get_child(character)
-            #character does not exisit
+                child_node = node.get_child(character)
+                node = child_node
             else:
+                # otherwise, check to see if the node we are at is terminal
                 return node.is_terminal()
-
+        
+        # if the final node that we get to is terminal
         return node.is_terminal()
 
     def insert(self, string):
         """Insert the given string into this prefix tree."""
-
         node = self.root
-        #loop over characters
-        for _, character in enumerate(string):
-            #check if node already exists
-            if node.has_child(character):
-                node = node.get_child(character)
-            #insert a new node
+        for char in string:
+            # Search for the child
+            if node.has_child(char):
+                # found it so just traverse to next node
+                node = node.get_child(char)
             else:
-                char_node = PrefixTreeNode(character)
-                node.add_child(character, char_node)
-                node = node.get_child(character)
-
+                # create new node and add it
+                new_node = PrefixTreeNode(char)
+                node.add_child(char, new_node)
+                # traverse to next node
+                node = new_node
         # set node to terminal and increment word count if the node is not already terminal
         if not node.is_terminal():
             self.size += 1
@@ -77,48 +74,44 @@ class PrefixTree:
         matches the longest prefix of the given string and the node's depth.
         The depth returned is equal to the number of prefix characters matched.
         Search is done iteratively with a loop starting from the root node."""
-        #edge case
+        # Match the empty string
         if len(string) == 0:
             return self.root, 0
-
+        # Start with the root node
         node = self.root
-        depth = 0
-        
-        for character in string:
-            if node.has_child(character):
-                node = node.get_child(character)
-                depth += 1
-            else:
-                break
-
-        return node, depth
+        # index
+        index = 0
+        # loop through letters of string
+        while index < len(string) and node.has_child(string[index]) is True:
+            # traverse
+            node = node.get_child(string[index])
+            index += 1
+        # return node and location
+        return node, index
 
     def complete(self, prefix):
         """Return a list of all strings stored in this prefix tree that start
         with the given prefix string."""
-        prefix_strings = []
-
-        # return all strings
+        # Create a list of completions in prefix tree
+        completions = []
+        # return all items if empty string
         if prefix == '':
             return self.strings()
-
-        #find last node in prefix string
+        # traverse to base where all options will be from
         node = self._find_node(prefix)
-        
+        # if node is empty, no completions
         if node[0].character != '':
-            self._traverse(node[0], prefix, prefix_strings.append)
-
-        # return all substrings
-        return prefix_strings
+            self._traverse(node[0], prefix, completions.append)
+        # return all the options
+        return completions
 
     def strings(self):
         """Return a list of all strings stored in this prefix tree."""
         # Create a list of all strings in prefix tree
         all_strings = []
-
-        #traverse all nodes starting at root
+        # add all the strings using our traverse
         self._traverse(self.root, '', all_strings.append)
-
+        # return all combos
         return all_strings
 
     def _traverse(self, node, prefix, visit):
@@ -128,72 +121,7 @@ class PrefixTree:
         # if we are at the end of a word, then visit it (append)
         if node.is_terminal():
             visit(prefix)
-
-        #traverse all of a nodes children
         for char in node.children.keys():
+            # traverse to the next node and build string recursivly
             child = node.get_child(char)
             self._traverse(child, prefix + char, visit)
-
-def create_prefix_tree(strings):
-    print(f'strings: {strings}')
-
-    tree = PrefixTree()
-    print(f'\ntree: {tree}')
-    print(f'root: {tree.root}')
-    print(f'strings: {tree.strings()}')
-
-    print('\nInserting strings:')
-    for string in strings:
-        tree.insert(string)
-        print(f'insert({string!r}), size: {tree.size}')
-
-    print(f'\ntree: {tree}')
-    print(f'root: {tree.root}')
-
-    print('\nSearching for strings in tree:')
-    for string in sorted(set(strings)):
-        result = tree.contains(string)
-        print(f'contains({string!r}): {result}')
-
-    print('\nSearching for strings not in tree:')
-    prefixes = sorted(set(string[:len(string)//2] for string in strings))
-    for prefix in prefixes:
-        if len(prefix) == 0 or prefix in strings:
-            continue
-        result = tree.contains(prefix)
-        print(f'contains({prefix!r}): {result}')
-
-    print('\nCompleting prefixes in tree:')
-    for prefix in prefixes:
-        completions = tree.complete(prefix)
-        print(f'complete({prefix!r}): {completions}')
-
-    print('\nRetrieving all strings:')
-    retrieved_strings = tree.strings()
-    print(f'strings: {retrieved_strings}')
-    matches = set(retrieved_strings) == set(strings)
-    print(f'matches? {matches}')
-
-
-def main():
-    # Simpe test case of string with partial substring overlaps
-    strings = ['ABC', 'ABD', 'A', 'XYZ']
-    create_prefix_tree(strings)
-
-    # Create a dictionary of tongue-twisters with similar words to test with
-    tongue_twisters = {
-        'Seashells': 'Shelly sells seashells by the sea shore'.split(),
-        # 'Peppers': 'Peter Piper picked a peck of pickled peppers'.split(),
-        # 'Woodchuck': ('How much wood would a wood chuck chuck'
-        #                ' if a wood chuck could chuck wood').split()
-    }
-    # Create a prefix tree with the similar words in each tongue-twister
-    for name, strings in tongue_twisters.items():
-        print(f'{name} tongue-twister:')
-        create_prefix_tree(strings)
-        if len(tongue_twisters) > 1:
-            print('\n' + '='*80 + '\n')
-
-
-if __name__ == '__main__':
-    main()
