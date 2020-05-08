@@ -28,6 +28,7 @@ class PriorityQueue(object):
     def enqueue(self, item, priority):
         """Insert the given item into this priority queue in order according to
         the given priority."""
+        
         # TODO: Insert given item into heap in order according to given priority
         # ...
 
